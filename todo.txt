@@ -1,0 +1,10 @@
+reafactor into components
+clean up css
+
+add new list by name
+on enter the task or list should be created
+make sure we are refreshing
+have the task collect use data from the header
+drag and drop the list order
+
+udpate the readme
