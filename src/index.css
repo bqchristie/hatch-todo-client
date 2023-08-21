@@ -1,8 +1,5 @@
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     padding: 1em;
@@ -13,6 +10,10 @@ body {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.add-task-toggle.hidden {
+    display: none;
 }
 
 .lanes {
@@ -30,13 +31,22 @@ code {
     flex-direction: column;
     gap: 6px;
     width: 230px;
+    min-width: 230px;
+}
+
+.lane.new-list {
+    background-color: #7c7a7a;
+}
+
+.lane.new-list h2{
+        color: #fff;
+
 }
 
 .task {
     background-color: #fff;
     border-radius: 8px;
     padding: 0.8em;
-    font-size: 0.8em;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     display: flex;
     justify-content: space-between;
@@ -77,13 +87,40 @@ form {
     display: none;
 }
 form.active {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+form button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: #5aac44;
+    border: none;
+    border-radius: 4px;
+}
+
+form textarea {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    line-height: 2em;
+    padding: 0.2em 1em;
 }
 
 .add-task-toggle {
-    font-size: 0.8em;
-    padding: 0.5em;
-    padding-left:1em;
+    padding: 0.8em;
+    padding-left:0;
+    margin-top: 0.2em;
+    display: flex;
+    align-items: center;
+}
+
+.add-task-toggle span {
+    padding-right: 0.2em;
 }
 .add-task-toggle:hover {
      cursor: pointer;
