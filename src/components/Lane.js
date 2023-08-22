@@ -18,6 +18,16 @@ export function Lane({
       : "";
   };
 
+  const filteredTasks = tasks
+    .filter((task, idx) => {
+      const isCurrentStatus = task.status === status;
+      const isNotPastMax = task.status === "DONE" ? idx < 10 : true;
+      const isMatch = !query ? true : task?.description.includes(query);
+      console.log(isMatch, query, task?.description);
+      return isCurrentStatus && isNotPastMax && isMatch;
+    })
+    .sort((taskA, taskB) => taskA.description.localeCompare(taskB.description));
+
   return (
     <div
       className={"lane"}
@@ -32,18 +42,18 @@ export function Lane({
       }}
     >
       <h2>{status.toLowerCase()}</h2>
-      {tasks &&
-        tasks
-          .filter((task, idx) => {
-            const isCurrentStatus = task.status === status;
-            const isNotPastMax = task.status === "DONE" ? idx < 10 : true;
-            const isMatch = !query ? true : task?.description.includes(query);
-            console.log(isMatch, query, task?.description);
-            return isCurrentStatus && isNotPastMax && isMatch;
-          })
-          .sort((taskA, taskB) =>
-            taskA.description.localeCompare(taskB.description),
-          )
+      {filteredTasks &&
+        filteredTasks
+          // .filter((task, idx) => {
+          //   const isCurrentStatus = task.status === status;
+          //   const isNotPastMax = task.status === "DONE" ? idx < 10 : true;
+          //   const isMatch = !query ? true : task?.description.includes(query);
+          //   console.log(isMatch, query, task?.description);
+          //   return isCurrentStatus && isNotPastMax && isMatch;
+          // })
+          // .sort((taskA, taskB) =>
+          //   taskA.description.localeCompare(taskB.description),
+          // )
           .map((task) => (
             <Task
               key={task.id}
@@ -55,9 +65,15 @@ export function Lane({
               onClick={() => handleDeleteTask(task.id)}
             />
           ))}
-      {status === "DONE" && (
+      {status === "DONE" && filteredTasks.length > 10 && (
         <div className={"visible-task-message"}>{visibleTasksMessage()}</div>
       )}
+      {filteredTasks.length === 0 && (
+        <div className={"visible-task-message"}>
+          {"This list has no tasks."}
+        </div>
+      )}
+
       <div>
         <div
           class={`add-task-toggle  ${
@@ -71,7 +87,7 @@ export function Lane({
         <form
           name={"taskForm"}
           onSubmit={onSubmit}
-          className={status === activeTaskForm ? "active" : ""}
+          className={`task ${status === activeTaskForm ? "active" : ""}`}
         >
           <textarea
             type="text"

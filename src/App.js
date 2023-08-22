@@ -97,7 +97,7 @@ const App = () => {
   });
 
   const handleChangeTaskStatus = async (taskId, status) => {
-    const task = tasks.find((task) => task.id == taskId);
+    const task = tasks.find((task) => task.id === Number(taskId));
     const updatedTask = { ...task, status: status };
     updateTaskMutation.mutate(updatedTask);
   };
@@ -148,6 +148,10 @@ const App = () => {
         })}
         <div className={"lane new-list"}>
           <h2 onClick={addList}>Add another list</h2>
+          <form onSubmit={handleSubmit}>
+            <input type="text" placeholder={"Enter list name"} />
+            <button type="submit">Add List</button>
+          </form>
         </div>
       </div>
     </div>
