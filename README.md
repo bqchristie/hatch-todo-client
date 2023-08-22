@@ -4,7 +4,8 @@ Thanks for taking the time to review this project!
 
 I started with the basic requirements but wanted to do something a little bit different so that I could play with reacte query and implement some simple drag and drop.  
 
-Complete functionality is far from complete basically working towards a stripped down Trello.
+Complete functionality is far from complete but I am working towards a stripped down Trello.
+
 
 
 

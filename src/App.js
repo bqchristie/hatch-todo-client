@@ -90,8 +90,7 @@ const App = () => {
   });
 
   const deleteTaskMutation = useMutation(deleteTask, {
-    onSuccess: () => {
-      debugger;
+    onSettled: () => {
       queryClient.invalidateQueries("tasks");
     },
   });
@@ -103,7 +102,6 @@ const App = () => {
   };
 
   const handleDeleteTask = async (taskId) => {
-    // const task = tasks.find((task) => task.id == taskId);
     deleteTaskMutation.mutate(taskId);
   };
 
