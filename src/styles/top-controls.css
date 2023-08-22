@@ -24,6 +24,20 @@
     color: darkred;
 }
 
+.top-controls button.action:hover {
+    cursor: pointer;
+    color: cornflowerblue;
+}
+
+.top-controls .actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5em;
+    margin-bottom: 1em;
+    width: 50%;
+}
+
 .top-controls .search {
     display: flex;
     align-items: center;

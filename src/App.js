@@ -143,14 +143,11 @@ const App = () => {
   };
 
   /**
-   * Deletes all tasks.  This is a bit of a hack and should be pushed out to the api.
+   * Deletes all tasks.
    * @returns {Promise<void>}
    */
   const handleDeleteAllTasks = async () => {
-    const ids = tasks.map((task) => task.id);
-    for (const id of ids) {
-      deleteTaskMutation.mutate(id);
-    }
+    deleteTaskMutation.mutate(-1);
   };
 
   const handleSubmit = async (e, status) => {
@@ -164,6 +161,15 @@ const App = () => {
     e.target.reset();
   };
 
+  const handleGenerateTasks = async () => {
+    const task = {
+      status: "NEW",
+      description: "GENERATE",
+    };
+    addTodoMutation.mutate(task);
+    setStatuses([]);
+  };
+
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -175,7 +181,9 @@ const App = () => {
   return (
     <div>
       <h1>Marvelous 2.0</h1>
-      <TopControls {...{ setQuery, handleDeleteAllTasks }} />
+      <TopControls
+        {...{ setQuery, handleDeleteAllTasks, handleGenerateTasks }}
+      />
       {/* TODO: refactor into lane component.  Maybe introduce context so we arent; passing around props*/}
       <div className={"lanes"}>
         {statuses.map((status) => {

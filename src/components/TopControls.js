@@ -1,6 +1,10 @@
 import React from "react";
 
-export function TopControls({ setQuery, handleDeleteAllTasks }) {
+export function TopControls({
+  setQuery,
+  handleDeleteAllTasks,
+  handleGenerateTasks,
+}) {
   return (
     <div className={"top-controls"}>
       <div className="search">
@@ -13,7 +17,10 @@ export function TopControls({ setQuery, handleDeleteAllTasks }) {
           }}
         />
       </div>
-      <div>
+      <div class={"actions"}>
+        <button onClick={() => handleGenerateTasks()} className={"action"}>
+          <span className="material-symbols-outlined">bolt</span> Generate Data
+        </button>
         <button onClick={() => handleDeleteAllTasks()}>
           <span className="material-symbols-outlined">warning</span> Clear All
           Tasks
