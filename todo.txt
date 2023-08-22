@@ -1,6 +1,12 @@
-reafactor into components
-clean up css
 
+sort lists
+debounced search
+refresh interval
+delete all
+
+
+
+clean up css
 add new list by name
 on enter the task or list should be created
 make sure we are refreshing

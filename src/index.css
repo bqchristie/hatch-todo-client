@@ -1,136 +1,160 @@
+@import "./styles/top-controls.css";
 body {
-    margin: 0;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    padding: 1em;
-    font-size: 16px;
-    font-family: 'Roboto', sans-serif;
-    background-image: linear-gradient(to right, #d3cce3, #e9e4f0);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 1em;
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+  background-image: linear-gradient(to right, #d3cce3, #e9e4f0);
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
 .add-task-toggle.hidden {
-    display: none;
+  display: none;
 }
 
 .lanes {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.8em;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8em;
 }
 
 .lane {
-    padding: 1em;
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-    background-color: rgb(241, 242, 244);
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    width: 230px;
-    min-width: 230px;
+  padding: 1em;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  background-color: rgb(241, 242, 244);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 230px;
+  min-width: 230px;
 }
 
 .lane.new-list {
-    background-color: #7c7a7a;
+  background-color: #7c7a7a;
 }
 
-.lane.new-list h2{
-        color: #fff;
-
+.lane.new-list h2 {
+  color: #fff;
 }
 
 .task {
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 0.8em;
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 0.8em;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .task:hover {
-    cursor: pointer;
-    background-color: #f1f1f1;
+  cursor: pointer;
+  background-color: #f1f1f1;
 }
 .task span {
-    font-size: 1.1em;
-    color: #adabab;
+  font-size: 1.1em;
+  color: #adabab;
 }
 
 .task span:hover {
-    cursor: pointer;
-    color: #000;
+  cursor: pointer;
+  color: #000;
 }
 
 h1 {
-    font-size: 1.4em;
-    font-family: 'Roboto', sans-serif;
-    font-weight: bold;
-    margin-bottom: 1em;
+  font-size: 1.4em;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  margin-bottom: 1em;
 }
 
 h2 {
-    font-size: 1em;
-    font-family: 'Roboto', sans-serif;
-    font-weight: bold;
-    color: #7c7a7a;
-    margin-bottom: 0.7em;
-    text-transform: lowercase;
+  font-size: 1em;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  color: #7c7a7a;
+  margin-bottom: 0.7em;
+  text-transform: lowercase;
 }
 
 form {
-    display: none;
+  display: none;
 }
 form.active {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
 }
 
 form button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    background-color: #61bd4f;
-    border: none;
-    border-radius: 4px;
-    font-size: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-color: #61bd4f;
+  border: none;
+  border-radius: 4px;
+  font-size: 1em;
 }
 
 form button:hover {
-    cursor: pointer;
-    background-color: #5aac44;
+  cursor: pointer;
+  background-color: #5aac44;
 }
 
 form textarea {
-    font-family: 'Roboto', sans-serif;
-    font-size: 1em;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    line-height: 2em;
-    padding: 0.2em 1em;
+  font-family: "Roboto", sans-serif;
+  font-size: 1em;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  line-height: 2em;
+  padding: 0.2em 1em;
 }
 
 .add-task-toggle {
-    padding: 0.8em;
-    padding-left:0;
-    margin-top: 0.2em;
-    display: flex;
-    align-items: center;
+  padding: 0.8em;
+  padding-left: 0.2em;
+  margin-top: 0.2em;
+  display: flex;
+  align-items: center;
 }
 
 .add-task-toggle span {
-    padding-right: 0.2em;
+  padding-right: 0.2em;
 }
 .add-task-toggle:hover {
-     cursor: pointer;
-     background-color: #cccccc;
-     border-radius: 8px;
+  cursor: pointer;
+  background-color: #cccccc;
+  border-radius: 8px;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 1em;
+  width: 50%;
+}
+
+.search input {
+  font-family: "Roboto", sans-serif;
+  font-size: 1em;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  line-height: 2em;
+  padding: 0.2em 1em;
+  padding-left: 2.8em;
+  width: 100%;
+}
+
+.search span {
+  position: absolute;
+  left: 30px;
 }
