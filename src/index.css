@@ -44,6 +44,14 @@ code {
   color: #fff;
 }
 
+.lane .visible-task-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9em;
+  color: #a2a2a2;
+  padding: 1em;
+}
 .task {
   background-color: #fff;
   border-radius: 8px;
@@ -81,7 +89,7 @@ h2 {
   font-weight: bold;
   color: #7c7a7a;
   margin-bottom: 0.7em;
-  text-transform: lowercase;
+  text-transform: capitalize;
 }
 
 form {

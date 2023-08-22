@@ -1,7 +1,23 @@
 import React from "react";
 import { Task } from "./Task";
 
-export function Lane(props) {
+export function Lane({
+  query,
+  tasks,
+  status,
+  activeTaskForm,
+  handleChangeTaskStatus,
+  handleDeleteTask,
+  onClick,
+  onSubmit,
+}) {
+  const visibleTasksMessage = () => {
+    const completedTasks = tasks.filter((task) => task.status === "DONE");
+    return completedTasks.length > 10
+      ? `Showing 1-10 of ${completedTasks.length}`
+      : "";
+  };
+
   return (
     <div
       className={"lane"}
@@ -12,16 +28,18 @@ export function Lane(props) {
       onDrop={(e) => {
         e.preventDefault();
         const taskId = e.dataTransfer.getData("task-id");
-        props.handleChangeTaskStatus(taskId, props.status);
+        handleChangeTaskStatus(taskId, status);
       }}
     >
-      <h2>{props.status}</h2>
-      {props.tasks &&
-        props.tasks
+      <h2>{status.toLowerCase()}</h2>
+      {tasks &&
+        tasks
           .filter((task, idx) => {
-            const isCurrentStatus = task.status === props.status;
+            const isCurrentStatus = task.status === status;
             const isNotPastMax = task.status === "DONE" ? idx < 10 : true;
-            return isCurrentStatus && isNotPastMax;
+            const isMatch = !query ? true : task?.description.includes(query);
+            console.log(isMatch, query, task?.description);
+            return isCurrentStatus && isNotPastMax && isMatch;
           })
           .sort((taskA, taskB) =>
             taskA.description.localeCompare(taskB.description),
@@ -34,30 +52,39 @@ export function Lane(props) {
                 const taskId = ev.target.attributes["data-id"].value;
                 ev.dataTransfer.setData("task-id", taskId);
               }}
-              onClick={() => props.handleDeleteTask(task.id)}
+              onClick={() => handleDeleteTask(task.id)}
             />
           ))}
+      {status === "DONE" && (
+        <div className={"visible-task-message"}>{visibleTasksMessage()}</div>
+      )}
       <div>
         <div
           class={`add-task-toggle  ${
-            props.status === props.activeTaskForm ? "hidden" : ""
+            status === activeTaskForm ? "hidden" : ""
           }`}
-          onClick={props.onClick}
+          onClick={onClick}
         >
           <span className={`material-symbols-outlined`}>add</span>
           Add a new task
         </div>
         <form
-          onSubmit={props.onSubmit}
-          className={props.status === props.activeTaskForm ? "active" : ""}
+          name={"taskForm"}
+          onSubmit={onSubmit}
+          className={status === activeTaskForm ? "active" : ""}
         >
           <textarea
             type="text"
             name="taskText"
             rows="6"
             placeholder="Enter a new task"
+            onKeyUp={(e) => {
+              if (e.key === "Enter") {
+                document.getElementById(`submit-button-${status}`).click();
+              }
+            }}
           />
-          <button type="submit">
+          <button type="submit" id={`submit-button-${status}`}>
             <span className="material-symbols-outlined">add</span>Add Task
           </button>
         </form>

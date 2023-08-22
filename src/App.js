@@ -35,19 +35,20 @@ const updateTask = async (updatedTask) => {
   return data;
 };
 
-const deleteTask = async (updatedTask) => {
-  const response = await fetch(`${API_URL}/${updatedTask.id}`, {
+const deleteTask = async (taskId) => {
+  const response = await fetch(`${API_URL}/${taskId}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(updatedTask),
   });
   const data = await response.json();
   return data;
 };
 
 const App = () => {
+  const [query, setQuery] = useState("");
+
   const [statuses, setStatuses] = useState(["NEW", "DONE"]);
   const [activeTaskForm, setActiveTaskForm] = useState();
   const queryClient = useQueryClient();
@@ -58,7 +59,23 @@ const App = () => {
     setStatuses(updatedStatuses);
   };
 
+  setTimeout(() => {
+    queryClient.invalidateQueries("tasks");
+  }, 60000);
+
   useEffect(() => {}, [tasks]);
+
+  // This effect will run every time the query changes but is deboucned by 500ms so
+  // we don't spam the console with every keystroke
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      console.log("Query:", query);
+    }, 500);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [query]);
 
   const addTodoMutation = useMutation(addTask, {
     onSuccess: () => {
@@ -74,6 +91,7 @@ const App = () => {
 
   const deleteTaskMutation = useMutation(deleteTask, {
     onSuccess: () => {
+      debugger;
       queryClient.invalidateQueries("tasks");
     },
   });
@@ -85,8 +103,8 @@ const App = () => {
   };
 
   const handleDeleteTask = async (taskId) => {
-    const task = tasks.find((task) => task.id == taskId);
-    deleteTaskMutation.mutate(task);
+    // const task = tasks.find((task) => task.id == taskId);
+    deleteTaskMutation.mutate(taskId);
   };
 
   const handleSubmit = async (e, status) => {
@@ -111,12 +129,13 @@ const App = () => {
   return (
     <div>
       <h1>Marvelous 2.0</h1>
-      <TopControls />
+      <TopControls {...{ setQuery, handleDeleteTask }} />
       <div className={"lanes"}>
         {statuses.map((status) => {
           const props = {
-            status: status,
-            tasks: tasks,
+            status,
+            tasks,
+            query,
             activeTaskForm,
             handleChangeTaskStatus,
             handleDeleteTask,

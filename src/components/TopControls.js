@@ -1,14 +1,22 @@
 import React from "react";
 
-export function TopControls() {
+export function TopControls({ setQuery, handleDeleteTask }) {
   return (
     <div className={"top-controls"}>
       <div className="search">
         <span className="material-symbols-outlined">search</span>
-        <input type="text" placeholder="Search" />
+        <input
+          type="text"
+          placeholder="Search"
+          onChange={(e) => {
+            setQuery(e.target.value);
+          }}
+        />
       </div>
       <div>
-        <a href={"#"}>Clear All Tasks</a>|<a href={"#"}>Generate Sample Data</a>
+        <a href={"#"} onClick={() => handleDeleteTask("truncate")}>
+          Clear All Tasks
+        </a>
       </div>
     </div>
   );
