@@ -19,14 +19,14 @@ export function Lane({
   };
 
   const filteredTasks = tasks
+    .sort((taskA, taskB) => taskA.description.localeCompare(taskB.description))
     .filter((task, idx) => {
       const isCurrentStatus = task.status === status;
       const isNotPastMax = task.status === "DONE" ? idx < 10 : true;
       const isMatch = !query ? true : task?.description.includes(query);
       console.log(isMatch, query, task?.description);
       return isCurrentStatus && isNotPastMax && isMatch;
-    })
-    .sort((taskA, taskB) => taskA.description.localeCompare(taskB.description));
+    });
 
   return (
     <div
@@ -54,7 +54,7 @@ export function Lane({
             onClick={() => handleDeleteTask(task.id)}
           />
         ))}
-      {status === "DONE" && filteredTasks.length > 10 && (
+      {status === "DONE" && filteredTasks.length > 9 && (
         <div className={"visible-task-message"}>{visibleTasksMessage()}</div>
       )}
       {filteredTasks.length === 0 && (

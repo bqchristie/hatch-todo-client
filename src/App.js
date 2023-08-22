@@ -58,12 +58,15 @@ const App = () => {
     });
   }, []);
 
+  //TODO: ok i am stating to get a lot of useState variables here.
+  // probably makes sense to introduce a local state management object to consolidate all of these (or redux)
+
   const [query, setQuery] = useState("");
   const [createListActive, setCreateListActive] = useState(false);
-
-  const [statuses, setStatuses] = useState(["NEW", "DONE"]);
+  const [statuses, setStatuses] = useState([]);
   const [newListName, setNewListName] = useState(null);
   const [activeTaskForm, setActiveTaskForm] = useState("null");
+
   const queryClient = useQueryClient();
   const { data: tasks, error, isLoading } = useQuery("tasks", fetchTasks);
 
@@ -76,11 +79,28 @@ const App = () => {
     setStatuses(updatedStatuses);
   };
 
+  // Make sure we do a refresh every minute so we don't get show stale data. can tune as required.
   setTimeout(() => {
     queryClient.invalidateQueries("tasks");
   }, 60000);
 
-  useEffect(() => {}, [tasks]);
+  // OK this is a work-around while we are not persisting new statuses and their order.
+  // We can derive the statuses from the tasks themselves.  But this does not account
+  // status order. So ok for demo but not for production. Know issue.
+  useEffect(() => {
+    if (tasks && statuses.length === 0) {
+      const statuses = tasks.reduce(
+        (acc, task) => {
+          if (!acc.includes(task.status)) {
+            acc.push(task.status);
+          }
+          return acc;
+        },
+        ["NEW", "DONE"],
+      );
+      setStatuses(statuses);
+    }
+  }, [tasks]);
 
   // This effect will run every time the query changes but is deboucned by 500ms so
   // we don't spam the console with every keystroke
@@ -156,6 +176,7 @@ const App = () => {
     <div>
       <h1>Marvelous 2.0</h1>
       <TopControls {...{ setQuery, handleDeleteAllTasks }} />
+      {/* TODO: refactor into lane component.  Maybe introduce context so we arent; passing around props*/}
       <div className={"lanes"}>
         {statuses.map((status) => {
           const props = {
