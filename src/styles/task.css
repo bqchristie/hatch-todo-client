@@ -21,3 +21,7 @@
     cursor: pointer;
     color: #000;
 }
+
+.task button span {
+    color: #fff;
+}

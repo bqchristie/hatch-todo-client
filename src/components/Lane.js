@@ -43,28 +43,17 @@ export function Lane({
     >
       <h2>{status.toLowerCase()}</h2>
       {filteredTasks &&
-        filteredTasks
-          // .filter((task, idx) => {
-          //   const isCurrentStatus = task.status === status;
-          //   const isNotPastMax = task.status === "DONE" ? idx < 10 : true;
-          //   const isMatch = !query ? true : task?.description.includes(query);
-          //   console.log(isMatch, query, task?.description);
-          //   return isCurrentStatus && isNotPastMax && isMatch;
-          // })
-          // .sort((taskA, taskB) =>
-          //   taskA.description.localeCompare(taskB.description),
-          // )
-          .map((task) => (
-            <Task
-              key={task.id}
-              task={task}
-              onDragStart={(ev, id) => {
-                const taskId = ev.target.attributes["data-id"].value;
-                ev.dataTransfer.setData("task-id", taskId);
-              }}
-              onClick={() => handleDeleteTask(task.id)}
-            />
-          ))}
+        filteredTasks.map((task) => (
+          <Task
+            key={task.id}
+            task={task}
+            onDragStart={(ev, id) => {
+              const taskId = ev.target.attributes["data-id"].value;
+              ev.dataTransfer.setData("task-id", taskId);
+            }}
+            onClick={() => handleDeleteTask(task.id)}
+          />
+        ))}
       {status === "DONE" && filteredTasks.length > 10 && (
         <div className={"visible-task-message"}>{visibleTasksMessage()}</div>
       )}

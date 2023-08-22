@@ -48,14 +48,19 @@ const deleteTask = async (taskId) => {
 
 const App = () => {
   const [query, setQuery] = useState("");
+  const [createListActive, setCreateListActive] = useState(false);
 
   const [statuses, setStatuses] = useState(["NEW", "DONE"]);
+  const [newListName, setNewListName] = useState(null);
   const [activeTaskForm, setActiveTaskForm] = useState();
   const queryClient = useQueryClient();
   const { data: tasks, error, isLoading } = useQuery("tasks", fetchTasks);
 
-  const addList = () => {
-    const updatedStatuses = [...statuses, "IN PROGRESS"];
+  const addList = (listName) => {
+    let updatedStatuses = [...statuses];
+    const done = updatedStatuses.pop();
+    updatedStatuses.push(listName.toUpperCase());
+    updatedStatuses.push(done);
     setStatuses(updatedStatuses);
   };
 
@@ -155,14 +160,37 @@ const App = () => {
           };
           return <Lane key={status} {...props} />;
         })}
-        <div className={"lane new-list"}>
-          <h2 onClick={addList}>
+        <div className={`lane new-list ${createListActive ? "active" : ""}`}>
+          <h2
+            // onClick={addList}
+            onClick={() => {
+              setNewListName(null);
+              setCreateListActive(true);
+              document.getElementById("list-name").value = "";
+            }}
+          >
             <span className="material-symbols-outlined">add</span>
             Add another list
           </h2>
-          <form onSubmit={handleSubmit}>
-            <input type="text" placeholder={"Enter list name"} />
-            <button type="submit">Add List</button>
+          <form>
+            <input
+              type="text"
+              id={"list-name"}
+              placeholder={"Enter list name"}
+              onChange={(e) => {
+                setNewListName(e.target.value.toUpperCase());
+              }}
+            />
+            <button
+              disabled={!newListName || statuses.includes(newListName)}
+              type="submit"
+              onClick={(e) => {
+                addList(newListName);
+                setCreateListActive(false);
+              }}
+            >
+              Add List
+            </button>
           </form>
         </div>
       </div>
