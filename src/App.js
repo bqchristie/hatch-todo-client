@@ -105,6 +105,17 @@ const App = () => {
     deleteTaskMutation.mutate(taskId);
   };
 
+  /**
+   * Deletes all tasks.  This is a bit of a hack and should be pushed out to the api.
+   * @returns {Promise<void>}
+   */
+  const handleDeleteAllTasks = async () => {
+    const ids = tasks.map((task) => task.id);
+    for (const id of ids) {
+      deleteTaskMutation.mutate(id);
+    }
+  };
+
   const handleSubmit = async (e, status) => {
     e.preventDefault();
     const task = {
@@ -127,7 +138,7 @@ const App = () => {
   return (
     <div>
       <h1>Marvelous 2.0</h1>
-      <TopControls {...{ setQuery, handleDeleteTask }} />
+      <TopControls {...{ setQuery, handleDeleteAllTasks }} />
       <div className={"lanes"}>
         {statuses.map((status) => {
           const props = {
@@ -145,7 +156,10 @@ const App = () => {
           return <Lane key={status} {...props} />;
         })}
         <div className={"lane new-list"}>
-          <h2 onClick={addList}>Add another list</h2>
+          <h2 onClick={addList}>
+            <span className="material-symbols-outlined">add</span>
+            Add another list
+          </h2>
           <form onSubmit={handleSubmit}>
             <input type="text" placeholder={"Enter list name"} />
             <button type="submit">Add List</button>

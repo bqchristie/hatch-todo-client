@@ -8,3 +8,42 @@
     padding-left: 0.5em;
     padding-right: 0.5em;
 }
+
+.top-controls button {
+    background-color: transparent;
+    color: #cecece;
+    border:none;
+    font-size: 1.2em;
+    font-weight: bold;
+    display: flex;
+    align-items: flex-end;
+}
+
+.top-controls button:hover {
+    cursor: pointer;
+    color: darkred;
+}
+
+.top-controls .search {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin-bottom: 1em;
+    width: 50%;
+}
+
+.top-controls .search input {
+    font-family: "Roboto", sans-serif;
+    font-size: 1em;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    line-height: 2em;
+    padding: 0.2em 1em;
+    padding-left: 2.8em;
+    width: 100%;
+}
+
+.top-controls .search span {
+    position: absolute;
+    left: 30px;
+}

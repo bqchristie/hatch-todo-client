@@ -1,6 +1,6 @@
 import React from "react";
 
-export function TopControls({ setQuery, handleDeleteTask }) {
+export function TopControls({ setQuery, handleDeleteAllTasks }) {
   return (
     <div className={"top-controls"}>
       <div className="search">
@@ -14,9 +14,10 @@ export function TopControls({ setQuery, handleDeleteTask }) {
         />
       </div>
       <div>
-        <a href={"#"} onClick={() => handleDeleteTask("truncate")}>
-          Clear All Tasks
-        </a>
+        <button onClick={() => handleDeleteAllTasks()}>
+          <span className="material-symbols-outlined">warning</span> Clear All
+          Tasks
+        </button>
       </div>
     </div>
   );

@@ -1,0 +1,37 @@
+.lane {
+    padding: 1em;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    background-color: rgb(241, 242, 244);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 230px;
+    min-width: 230px;
+}
+
+.lane.new-list {
+    background-color: #7c7a7a;
+}
+
+.lane.new-list h2 {
+    color: #fff;
+}
+
+.lane .visible-task-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9em;
+    color: #a2a2a2;
+    padding: 1em;
+}
+
+.lane.new-list h2 {
+    display: flex;
+    align-items: center;
+}
+
+.lane.new-list form {
+    display: none;
+}

@@ -1,0 +1,23 @@
+.task {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 0.8em;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task:hover {
+    cursor: pointer;
+    background-color: #f1f1f1;
+}
+.task span {
+    font-size: 1.1em;
+    color: #adabab;
+}
+
+.task span:hover {
+    cursor: pointer;
+    color: #000;
+}
