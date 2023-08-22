@@ -47,16 +47,28 @@ const deleteTask = async (taskId) => {
 };
 
 const App = () => {
+  // adding a general window listener for the escape key which will close any open forms or modals
+  useEffect(() => {
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        setActiveTaskForm(null);
+        setNewListName(null);
+        setCreateListActive(false);
+      }
+    });
+  }, []);
+
   const [query, setQuery] = useState("");
   const [createListActive, setCreateListActive] = useState(false);
 
   const [statuses, setStatuses] = useState(["NEW", "DONE"]);
   const [newListName, setNewListName] = useState(null);
-  const [activeTaskForm, setActiveTaskForm] = useState();
+  const [activeTaskForm, setActiveTaskForm] = useState("null");
   const queryClient = useQueryClient();
   const { data: tasks, error, isLoading } = useQuery("tasks", fetchTasks);
 
   const addList = (listName) => {
+    //In the absence of list sorting, we'll just add the new list to the end of the array but before the DONE list.
     let updatedStatuses = [...statuses];
     const done = updatedStatuses.pop();
     updatedStatuses.push(listName.toUpperCase());
