@@ -67,7 +67,7 @@ const App = () => {
   const [statuses, setStatuses] = useState([]);
   const [newListName, setNewListName] = useState(null);
   const [activeTaskForm, setActiveTaskForm] = useState("null");
-  const [showConfirmationModal, setShowConfirmationModal] = useState(true);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
   const queryClient = useQueryClient();
   const { data: tasks, error, isLoading } = useQuery("tasks", fetchTasks);
@@ -82,9 +82,11 @@ const App = () => {
   };
 
   // Make sure we do a refresh every minute, so we don't get show stale data. can tune as required.
-  setTimeout(() => {
-    queryClient.invalidateQueries("tasks");
-  }, 60000);
+  useEffect(() => {
+    setTimeout(() => {
+      queryClient.invalidateQueries("tasks");
+    }, 60000);
+  }, []);
 
   // OK this is a work-around while we are not persisting new statuses and their order.
   // We can derive the statuses from the tasks themselves.  But this does not account
@@ -154,6 +156,11 @@ const App = () => {
     setStatuses([]);
   };
 
+  const handleDuplicateTask = async (task) => {
+    let newTask = { description: task.description, status: "NEW" };
+    addTodoMutation.mutate(newTask);
+  };
+
   const handleSubmit = async (e, status) => {
     e.preventDefault();
     const task = {
@@ -198,6 +205,7 @@ const App = () => {
             activeTaskForm,
             handleChangeTaskStatus,
             handleDeleteTask,
+            handleDuplicateTask,
             onClick: () => {
               setActiveTaskForm(status);
             },

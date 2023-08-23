@@ -8,6 +8,7 @@ export function Lane({
   activeTaskForm,
   handleChangeTaskStatus,
   handleDeleteTask,
+  handleDuplicateTask,
   onClick,
   onSubmit,
 }) {
@@ -51,7 +52,8 @@ export function Lane({
               const taskId = ev.target.attributes["data-id"].value;
               ev.dataTransfer.setData("task-id", taskId);
             }}
-            onClick={() => handleDeleteTask(task.id)}
+            handleDelete={() => handleDeleteTask(task.id)}
+            handleDuplicate={() => handleDuplicateTask(task)}
           />
         ))}
       {status === "DONE" && filteredTasks.length > 9 && (
