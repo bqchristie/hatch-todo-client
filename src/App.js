@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Lane } from "./components/Lane";
 import { TopControls } from "./components/TopControls";
+import { ConfirmModal } from "./components/ConfirmModal";
 
 const API_URL = process.env.REACT_APP_API_BASE_URL + "/task";
 const fetchTasks = async () => {
@@ -58,7 +59,7 @@ const App = () => {
     });
   }, []);
 
-  //TODO: ok i am stating to get a lot of useState variables here.
+  //TODO: ok i am starting to get a lot of useState variables here.
   // probably makes sense to introduce a local state management object to consolidate all of these (or redux)
 
   const [query, setQuery] = useState("");
@@ -66,12 +67,13 @@ const App = () => {
   const [statuses, setStatuses] = useState([]);
   const [newListName, setNewListName] = useState(null);
   const [activeTaskForm, setActiveTaskForm] = useState("null");
+  const [showConfirmationModal, setShowConfirmationModal] = useState(true);
 
   const queryClient = useQueryClient();
   const { data: tasks, error, isLoading } = useQuery("tasks", fetchTasks);
 
   const addList = (listName) => {
-    //In the absence of list sorting, we'll just add the new list to the end of the array but before the DONE list.
+    // In the absence of list sorting (TODO), we'll just add the new list to the end of the array but before the DONE list.
     let updatedStatuses = [...statuses];
     const done = updatedStatuses.pop();
     updatedStatuses.push(listName.toUpperCase());
@@ -79,7 +81,7 @@ const App = () => {
     setStatuses(updatedStatuses);
   };
 
-  // Make sure we do a refresh every minute so we don't get show stale data. can tune as required.
+  // Make sure we do a refresh every minute, so we don't get show stale data. can tune as required.
   setTimeout(() => {
     queryClient.invalidateQueries("tasks");
   }, 60000);
@@ -96,7 +98,7 @@ const App = () => {
           }
           return acc;
         },
-        ["NEW", "DONE"],
+        ["NEW", "IN PROGRESS", "DONE"],
       );
       setStatuses(statuses);
     }
@@ -148,6 +150,8 @@ const App = () => {
    */
   const handleDeleteAllTasks = async () => {
     deleteTaskMutation.mutate(-1);
+    setShowConfirmationModal(false);
+    setStatuses([]);
   };
 
   const handleSubmit = async (e, status) => {
@@ -182,7 +186,7 @@ const App = () => {
     <div>
       <h1>Marvelous 2.0</h1>
       <TopControls
-        {...{ setQuery, handleDeleteAllTasks, handleGenerateTasks }}
+        {...{ setQuery, setShowConfirmationModal, handleGenerateTasks }}
       />
       {/* TODO: refactor into lane component.  Maybe introduce context so we arent; passing around props*/}
       <div className={"lanes"}>
@@ -235,6 +239,9 @@ const App = () => {
           </form>
         </div>
       </div>
+      {showConfirmationModal && (
+        <ConfirmModal {...{ setShowConfirmationModal, handleDeleteAllTasks }} />
+      )}
     </div>
   );
 };

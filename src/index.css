@@ -2,6 +2,7 @@
 @import "./styles/top-controls.css";
 @import "./styles/lane.css";
 @import "./styles/task.css";
+@import "./styles/modal.css";
 
 
 body {

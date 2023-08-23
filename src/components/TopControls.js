@@ -2,7 +2,7 @@ import React from "react";
 
 export function TopControls({
   setQuery,
-  handleDeleteAllTasks,
+  setShowConfirmationModal,
   handleGenerateTasks,
 }) {
   return (
@@ -11,7 +11,7 @@ export function TopControls({
         <span className="material-symbols-outlined">search</span>
         <input
           type="text"
-          placeholder="Search"
+          placeholder="Search (case sensitive)"
           onChange={(e) => {
             setQuery(e.target.value);
           }}
@@ -21,7 +21,7 @@ export function TopControls({
         <button onClick={() => handleGenerateTasks()} className={"action"}>
           <span className="material-symbols-outlined">bolt</span> Generate Data
         </button>
-        <button onClick={() => handleDeleteAllTasks()}>
+        <button onClick={() => setShowConfirmationModal(true)}>
           <span className="material-symbols-outlined">warning</span> Clear All
           Tasks
         </button>
