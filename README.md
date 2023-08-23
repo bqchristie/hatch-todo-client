@@ -6,7 +6,7 @@ As I looked at the requirements for this project I was reminded of Trello with l
 
 Although I was able to build in a lot of functionality beyond the scope of the project you could fairly call out as feature creep.  When I started the project I wanted to get something out of it for myself and have a bit of fun.
 
-![](/Users/brucechristie/code/hatch-todo-client/public/Marvelous 2.0.png)
+![](https://github.com/bqchristie/hatch-todo-client/blob/main/public/Marvelous%202.0.png)
 
 ## Where can I see it?
 * You can see the project running at a [Linode server running here](http://172.105.110.150:8080/).  Sorry didn't have a domain and no cerbot.
